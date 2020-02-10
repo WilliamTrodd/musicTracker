@@ -1,0 +1,16 @@
+<p>
+    <strong>Album Title:</strong>
+    <%= @album.album_title %>
+</p>
+
+<p>
+    <strong>Artist:</strong>
+    <%= @album.artist %>
+</p>
+
+<p>
+    <strong>Cover art:</strong>
+    <img src=<%= @album.artwork %>/>
+</p>
+
+<%= link_to 'Back', albums_path %>

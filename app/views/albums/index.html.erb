@@ -1,0 +1,19 @@
+<%= link_to 'New Album', new_album_path %>
+
+<table>
+        <tr>
+            <th>Album Title</th>
+            <th>Artist</th>
+            <th>Artwork</th>
+        </tr>
+    
+        <% @albums.each do |albums| %>
+            <tr>
+                <td><%= albums.album_title %></td>
+                <td><%= albums.artist %></td>
+                <td><img src=<%= albums.artwork %>/></td>
+            </tr>
+        <% end %>
+        
+        
+</table>

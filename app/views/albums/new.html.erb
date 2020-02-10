@@ -1,0 +1,19 @@
+<h1>New Album</h1>
+
+<%= form_with scope: :album, url: albums_path, local: true do |album_form| %>
+  <p>
+    <%= album_form.label :album_title %><br>
+    <%= album_form.text_field :album_title %>
+  </p>
+
+  <p>
+    <%= album_form.label :artist %><br>
+    <%= album_form.text_field :artist %>
+  </p>
+
+  <p>
+    <%= album_form.submit %>
+  </p>
+<% end %>
+
+<% link_to 'Back', albums_path %>
