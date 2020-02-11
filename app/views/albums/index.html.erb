@@ -5,13 +5,15 @@
             <th>Album Title</th>
             <th>Artist</th>
             <th>Artwork</th>
+            <th colspan="1"></th>
         </tr>
     
-        <% @albums.each do |albums| %>
+        <% @albums.reverse_order.each do |album| %>
             <tr>
-                <td><%= albums.album_title %></td>
-                <td><%= albums.artist %></td>
-                <td><img src=<%= albums.artwork %>/></td>
+                <td><%= album.album_title %></td>
+                <td><%= album.artist %></td>
+                <td><img src=<%= album.artwork %>/></td>
+                <td><%= link_to 'Edit', edit_album_path(album) %></td>
             </tr>
         <% end %>
         

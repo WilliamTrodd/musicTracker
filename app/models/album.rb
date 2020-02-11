@@ -1,4 +1,4 @@
 class Album < ApplicationRecord
-    #validates: :title, presence: true
-    
+    validates :album_title, presence: true
+    validates :artist, presence: true
 end

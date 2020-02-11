@@ -8,19 +8,33 @@ class AlbumsController < ApplicationController
     end
     
     def new
+        @album = Album.new
     end
     
     def edit
+      @album = Album.find(params[:id])
     end
     
     def create
         @album = Album.new(album_params)
+        
         @album.artwork = get_art(@album.album_title, @album.artist)
-        @album.save
-        redirect_to @album
+        if @album.save and @album.artwork != ""
+            redirect_to @album
+        else
+            render 'new'
+        end
     end
     
     def update
+        @album = Album.find(params[:id])
+        
+        if @album.update(article_params)
+            @album.artwork = get_art(@album.album_title, @album.artist)
+            redirect_to @album
+        else
+            render 'edit'
+        end
     end
     
     def destroy
@@ -39,7 +53,11 @@ class AlbumsController < ApplicationController
           api = 'http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=b698bd0cd321931710479eb653eeca97&artist=%s&album=%s&format=json' % [artist, title]
           uri = URI(api)
           response = Net::HTTP.get(uri)
-          puts(JSON.parse(response)["album"]["image"][2]['#text'])
-          return JSON.parse(response)["album"]["image"][2]['#text']
+          begin
+            return_str = JSON.parse(response)["album"]["image"][2]['#text']
+          rescue NoMethodError
+            return_str = ""
+          end
+          return return_str
       end
 end
