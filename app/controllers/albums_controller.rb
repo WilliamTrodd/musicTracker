@@ -1,4 +1,6 @@
 class AlbumsController < ApplicationController
+    # CRUD methods
+    
     def index
         @albums = Album.all
     end
@@ -17,7 +19,6 @@ class AlbumsController < ApplicationController
     
     def create
         @album = Album.new(album_params)
-        
         @album.artwork = get_art(@album.album_title, @album.artist)
         if @album.save and @album.artwork != ""
             redirect_to @album
@@ -28,9 +29,8 @@ class AlbumsController < ApplicationController
     
     def update
         @album = Album.find(params[:id])
-        
-        if @album.update(article_params)
-            @album.artwork = get_art(@album.album_title, @album.artist)
+        if @album.update(album_params)
+            @album.update(artwork: get_art(@album.album_title, @album.artist))
             redirect_to @album
         else
             render 'edit'
@@ -38,11 +38,17 @@ class AlbumsController < ApplicationController
     end
     
     def destroy
+        @album = Album.find(params[:id])
+        @album.destroy
+        
+        redirect_to albums_path
     end
+    
+    # Other methods
     
     private
       def album_params
-        params.require(:album).permit(:album_title, :artist, :artwork)
+          params.require(:album).permit(:album_title, :artist, :artwork)
       end
     
     private
